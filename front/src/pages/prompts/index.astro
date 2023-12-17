@@ -1,0 +1,91 @@
+---
+import LayoutSidebar from '@app/LayoutSidebar.astro';
+import Filter from '@icons/Filter.astro';
+import Arrow from '@icons/Arrow.astro';
+---
+
+<LayoutSidebar>
+	<div class="px-4 pt-4">
+		<section class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+			<!-- Card header -->
+			<div class="items-center justify-between lg:flex">
+				<div class="mb-4 lg:mb-0">
+					<h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+						Your Images
+					</h3>
+					<span class="text-base font-normal text-gray-500 dark:text-gray-400">
+						This is the list of all the images you have uploaded
+					</span>
+				</div>
+
+				<!-- Filter dropdown -->
+				<section class="relative flex gap-4">
+
+					<div class="inline-flex rounded-md shadow-sm" role="group" id="buttonGroup">
+						<button type="button" id="importButton" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-l-lg hover:bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600">
+							Import
+						</button>
+
+						<button type="button" id="updateButton" class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-r-md hover:bg-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 activeButton">
+							Update
+						</button>
+					</div>
+
+					<div id="filters" class="relative">
+						<button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+							class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:bg-gray-200 dark:focus:bg-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+							type="button">
+							<Filter />
+							Filter
+							<Arrow />
+						</button>
+						<div id="filterDropdown" class="z-10 hidden bg-white rounded-lg shadow dark:bg-gray-700 translate-y-4 absolute right-0 max-w-max p-4 py-4 top-full">
+							<h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Affiliate</h6>
+
+							<ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
+
+							</ul>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<!-- Masonry -->
+			<div class="mt-8 grid grid-cols-3 gap-4">
+				<div class="grid gap-4">
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1701921335693-3c1cf9b6e541?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1702165641468-7e422af7fd6b?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1702650953751-87d60425caff?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+				</div>
+				<div class="grid gap-4">
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1702031617375-f71096eb385d?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1702012464618-3cee08e53644?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1682687221363-72518513620e?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+				</div>
+				<div class="grid gap-4">
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1701906268031-d7f65ea8e8df?q=80&w=1933&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1701624314371-acc9aad51268?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+					<div>
+						<img class="h-auto max-w-full rounded-lg" src="https://images.unsplash.com/photo-1701657130280-19757c5c7f31?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</LayoutSidebar>
