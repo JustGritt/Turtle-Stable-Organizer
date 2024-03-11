@@ -1,0 +1,23 @@
+---
+import LayoutSidebar from '@app/LayoutSidebar.astro';
+import ImageInfo from '@components/ImageInfo.astro';
+---
+
+<LayoutSidebar>
+	<div class="px-4 pt-4">
+		<section class="min-h-[full] p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+			<div class="items-center justify-between lg:flex">
+				<div class="mb-4 lg:mb-0">
+					<h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+						Image informations
+					</h3>
+					<span class="text-base font-normal text-gray-500 dark:text-gray-400">
+						Upload an image here to get the metadata information (exif, iptc, xmp, etc).
+					</span>
+				</div>
+			</div>
+		</section>
+		<ImageInfo uploaded="false" />
+	</div>
+</LayoutSidebar>
+

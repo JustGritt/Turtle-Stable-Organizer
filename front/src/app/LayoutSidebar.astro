@@ -1,0 +1,21 @@
+---
+import FooterSidebar from './FooterSidebar.astro';
+import LayoutCommon from './LayoutCommon.astro';
+import NavBarSidebar from './NavBarSidebar.astro';
+import SideBar from './SideBar.astro';
+
+// Load CSS
+import '@styles/global.css';
+import '@styles/dark.css';
+---
+
+<LayoutCommon>
+	<NavBarSidebar />
+	<SideBar />
+	<div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+		<div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900 min-h-screen md:w-[calc(100%-16rem)] ml-auto">
+			<slot />
+			<FooterSidebar />
+		</div>
+	</div>
+</LayoutCommon>

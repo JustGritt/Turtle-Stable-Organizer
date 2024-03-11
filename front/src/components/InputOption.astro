@@ -1,0 +1,9 @@
+---
+const { title, content } = Astro.props
+---
+<div class="flex items-center justify-between bg-white dark:bg-gray-800">
+    <div class="flex items-start flex-col w-full gap-2">
+        <p class="text-md font-bold text-gray-900 dark:text-white">{ title }</p>
+        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="text" placeholder={ content }>
+    </div>
+</div>

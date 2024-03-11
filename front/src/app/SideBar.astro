@@ -1,0 +1,114 @@
+---
+import GalleryIcon from '@icons/gallery.astro';
+import PromptIcon from '@icons/prompt.astro';
+import DropdownIcon from '@icons/dropdown.astro';
+import OptionIcon from '@icons/option.astro';
+import UploadIcon from '@icons/upload.astro';
+---
+
+<aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
+	<div class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+		<div class:list={[ 'flex flex-col flex-1 pt-5 pb-28 overflow-y-auto'
+			, 'scrollbar scrollbar-w-2 scrollbar-thumb-rounded-[0.1667rem]'
+			, 'scrollbar-thumb-slate-200 scrollbar-track-gray-400'
+			, 'dark:scrollbar-thumb-slate-900 dark:scrollbar-track-gray-800' , ]}>
+			<div class="flex flex-col flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+
+				<a href="/upload" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+					<UploadIcon />
+					<span sidebar-toggle-item>Add new image</span>
+				</a>
+
+				<ul class="py-4 space-y-2">
+
+					<li>
+						<button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages" id="menuDropdownButton">
+							<!-- <GalleryIcon /> -->
+
+							<a class="flex-1 ml-3 text-left whitespace-nowrap font-bold" sidebar-toggle-item>Stable Diffusion</a>
+							<DropdownIcon id="dropdown" />
+						</button>
+
+						<ul id="dropdown-pages" class="py-2 space-y-2">
+							<li>
+								<a href="/gallery" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+									<GalleryIcon />
+									<span class="ml-3 capitalize" sidebar-toggle-item>Gallery</span>
+								</a>
+							</li>
+							<li>
+								<a href="/info" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+									<PromptIcon />
+									<span class="ml-3 capitalize" sidebar-toggle-item>Info</span>
+								</a>
+							</li>
+							<li>
+								<a href="/prompts" class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">
+									<PromptIcon />
+									<span class="ml-3 capitalize" sidebar-toggle-item>Prompts</span>
+								</a>
+							</li>
+						</ul>
+					</li>
+
+					<li>
+						<a href="/options"
+							class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
+							<OptionIcon />
+							<span class="ml-3" sidebar-toggle-item>Options</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</aside>
+
+<!-- Visual -->
+<div id="sidebarBackdrop" class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90"></div>
+
+<script>
+
+	// Handle sidebar
+	const sidebar = document.getElementById('sidebar');
+	if (sidebar) {
+		const toggleSidebarMobile = (
+			sidebar: HTMLElement,
+			sidebarBackdrop: HTMLElement,
+			toggleSidebarMobileHamburger: HTMLElement,
+			toggleSidebarMobileClose: HTMLElement,
+		) => {
+			sidebar.classList.toggle('hidden');
+			sidebarBackdrop.classList.toggle('hidden');
+			toggleSidebarMobileHamburger.classList.toggle('hidden');
+			toggleSidebarMobileClose.classList.toggle('hidden');
+		};
+
+		const sidebarBackdrop = document.getElementById('sidebarBackdrop')!;
+		const toggleSidebarMobileHamburger = document.getElementById('toggleSidebarMobileHamburger')!;
+		const toggleSidebarMobileClose = document.getElementById('toggleSidebarMobileClose')!;
+
+		const addToggleEventListener = (element: HTMLElement | null) => {
+			element?.addEventListener('click', () => {
+				toggleSidebarMobile(
+					sidebar,
+					sidebarBackdrop,
+					toggleSidebarMobileHamburger,
+					toggleSidebarMobileClose,
+				);
+			});
+		};
+
+		addToggleEventListener(document.getElementById('toggleSidebarMobile'));
+		addToggleEventListener(sidebarBackdrop);
+	}
+
+	// Handle side menu dropdowns
+	document.getElementById('menuDropdownButton')?.addEventListener('click', () => {
+		const dropdownElement = document.querySelector('#menuDropdownButton .dropdown-icon') as HTMLElement;
+		dropdownElement.classList.toggle('rotate-180');
+
+		const dropdown = document.getElementById('dropdown-pages')!;
+		dropdown.classList.toggle('hidden');
+	});
+</script>
