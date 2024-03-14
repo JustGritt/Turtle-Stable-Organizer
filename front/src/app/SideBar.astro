@@ -1,9 +1,9 @@
 ---
-import GalleryIcon from '@icons/gallery.astro';
-import PromptIcon from '@icons/prompt.astro';
-import DropdownIcon from '@icons/dropdown.astro';
-import OptionIcon from '@icons/option.astro';
-import UploadIcon from '@icons/upload.astro';
+import DropdownIcon from '@icons/Dropdown.astro';
+import GalleryIcon from '@icons/Gallery.astro';
+import PromptIcon from '@icons/Prompt.astro';
+import OptionIcon from '@icons/Option.astro';
+import UploadIcon from '@icons/Upload.astro';
 ---
 
 <aside id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width" aria-label="Sidebar">
@@ -14,7 +14,7 @@ import UploadIcon from '@icons/upload.astro';
 			, 'dark:scrollbar-thumb-slate-900 dark:scrollbar-track-gray-800' , ]}>
 			<div class="flex flex-col flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
 
-				<a href="/upload" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+				<a href="/upload" class="flex items-center justify-center p-4 mb-4 font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
 					<UploadIcon />
 					<span sidebar-toggle-item>Add new image</span>
 				</a>
@@ -71,6 +71,10 @@ import UploadIcon from '@icons/upload.astro';
 
 	// Handle sidebar
 	const sidebar = document.getElementById('sidebar');
+	const sidebarBackdrop = document.getElementById('sidebarBackdrop')!;
+	const toggleSidebarMobileClose = document.getElementById('toggleSidebarMobileClose')!;
+	const toggleSidebarMobileHamburger = document.getElementById('toggleSidebarMobileHamburger')!;
+
 	if (sidebar) {
 		const toggleSidebarMobile = (
 			sidebar: HTMLElement,
@@ -83,10 +87,6 @@ import UploadIcon from '@icons/upload.astro';
 			toggleSidebarMobileHamburger.classList.toggle('hidden');
 			toggleSidebarMobileClose.classList.toggle('hidden');
 		};
-
-		const sidebarBackdrop = document.getElementById('sidebarBackdrop')!;
-		const toggleSidebarMobileHamburger = document.getElementById('toggleSidebarMobileHamburger')!;
-		const toggleSidebarMobileClose = document.getElementById('toggleSidebarMobileClose')!;
 
 		const addToggleEventListener = (element: HTMLElement | null) => {
 			element?.addEventListener('click', () => {
@@ -101,6 +101,14 @@ import UploadIcon from '@icons/upload.astro';
 
 		addToggleEventListener(document.getElementById('toggleSidebarMobile'));
 		addToggleEventListener(sidebarBackdrop);
+	}
+
+	// Close the navbar by default on mobile
+	if (window.innerWidth < 1024) {
+		sidebar?.classList.add('hidden');
+		sidebarBackdrop.classList.add('hidden');
+		toggleSidebarMobileHamburger.classList.remove('hidden');
+		toggleSidebarMobileClose.classList.add('hidden');
 	}
 
 	// Handle side menu dropdowns
