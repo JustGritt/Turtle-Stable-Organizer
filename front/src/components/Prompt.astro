@@ -1,0 +1,94 @@
+---
+import CopyIcon from "@icons/Copy.astro";
+import TrashIcon from "@icons/Trash.astro";
+import AttachIcon from "@icons/Attach.astro";
+import SpaklesIcon from "@icons/Sparkles.astro";
+---
+<div id="prompt">
+    <section class="w-full mt-4 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+        <div class="flex items-center justify-between px-3 py-2 border-b dark:border-gray-600">
+            <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+
+                <section>
+                    <button type="button" data-tooltip="Attach file"
+                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                        <AttachIcon />
+                        <span class="sr-only">Attach file</span>
+                    </button>
+                    <button type="button" data-tooltip="Copy prompt"
+                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                        <CopyIcon />
+                        <span class="sr-only">Copy prompt</span>
+                    </button>
+
+                    <button type="button" data-tooltip="Tidy"
+                        class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                        <SpaklesIcon />
+                        <span class="sr-only">Tidy</span>
+                    </button>
+                </section>
+
+                <div class="ml-2 flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:ps-4">
+                    <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Number of characters: <span class="font-semibold" data-characters="0">0</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:ps-4">
+                    <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+
+
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            Number of words: <span class="font-semibold" data-words="0">0</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" data-tooltip="Delete prompt"
+                class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                <TrashIcon />
+                <span class="sr-only">Delete prompt</span>
+            </button>
+        </div>
+
+        <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+            <textarea id="editor" rows="8" class="block w-full px-0 text-lg text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="masterpiece, highres..." spellcheck="false" /></textarea>
+        </div>
+    </div>
+</div>
+
+<style>
+
+</style>
+
+<script type="module">
+    const editor = document.getElementById('editor');
+    const prompt = document.getElementById('prompt');
+
+    // Update the number of characters
+    const characters = prompt.querySelector('[data-characters]');
+    const words = prompt.querySelector('[data-words]');
+    editor.addEventListener('input', () => {
+        characters.textContent = editor.value.length;
+        words.textContent = editor.value.split(/\s+/).filter(Boolean).length;
+    });
+
+    // Handle the copy button
+    prompt.querySelector('[data-tooltip="Copy prompt"]').addEventListener('click', () => {
+        editor.select();
+        document.execCommand('copy');
+    });
+
+    // Handle the delete button
+    prompt.querySelector('[data-tooltip="Delete prompt"]').addEventListener('click', () => {
+        editor.value = '';
+    });
+
+    // Handle the tidy button
+    prompt.querySelector('[data-tooltip="Tidy"]').addEventListener('click', () => {
+        editor.value = editor.value.replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').trim();
+    });
+</script>
