@@ -1,0 +1,95 @@
+---
+import LayoutSidebar from '@app/LayoutSidebar.astro';
+import ToggleOption from '@components/ToggleOption.astro';
+import InputOption from '@components/InputOption.astro';
+
+// Get the current settings from the server
+const req = await fetch(`${import.meta.env.PUBLIC_API_URL}/settings`);
+const settings = await req.json().then(settings => {
+	return {
+		// General settings
+		"outputPath": settings.OUTPUT_DIR || "stable-diffusion-webui/outputs",
+		"directoryNamePattern": settings.OUTPUT_DIR_PATTERN || "[date]/[model_name]",
+		"uploadPath": settings.UPLOAD_DIR || "./images",
+		// User interface settings
+		"darkMode": settings.INTERFACE_DARK_MODE || "false",
+		"displayImageDate": settings.INTERFACE_SHOW_DATE || "true",
+		"displayImageTags": settings.INTERFACE_SHOW_TAGS || "false",
+		"numberOfImages": settings.INTERFACE_GALLERY_FETCH_IMAGES || 10,
+		"numberOfColumns": settings.INTERFACE_GALLERY_COLUMNS || 3
+	};
+});
+---
+
+<LayoutSidebar>
+	<div class="px-4 pt-4">
+		<section class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+			<!-- Card header -->
+			<div class="items-center justify-between lg:flex">
+				<div class="mb-4 lg:mb-0">
+					<h3 class="mb-2 text-xl font-bold text-gray-900 dark:text-white">
+						Settings
+					</h3>
+					<span class="text-base font-normal text-gray-500 dark:text-gray-400">
+						Configure the paths and parameters of the web application.
+					</span>
+				</div>
+
+				<section class="relative flex gap-6">
+					<button id="save" class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+						Save changes
+					</button>
+				</section>
+			</div>
+		</section>
+
+		<form method="POST">
+			<section class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+				<h4 class="text-2xl mb-6 font-bold text-gray-900 dark:text-white">
+					General
+				</h4>
+				<div class="grid grid-cols-2 gap-6">
+					<InputOption prop="OUTPUT_DIR" title="Stable Diffusion output path" placeholder="stable-diffusion-webui/outputs" value={ settings.outputPath } />
+					<InputOption prop="OUTPUT_DIR_PATTERN" title="Directory name pattern" link="https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Custom-Images-Filename-Name-and-Subdirectory"  placeholder="[date]/[model_name]" value={ settings.directoryNamePattern } />
+					<InputOption prop="UPLOAD_DIR" title="Uploaded images path" placeholder="./images" value={ settings.uploadPath } />
+				</div>
+			</section>
+			<section class="mt-4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 dark:bg-gray-800">
+				<h4 class="text-2xl mb-6 font-bold text-gray-900 dark:text-white">
+					User Interface
+				</h4>
+				<div class="grid grid-cols-2 gap-6">
+					<ToggleOption prop="INTERFACE_DARK_MODE" title="Enable dark mode" description="Apply dark theme to the web interface" checked={ settings.darkMode } />
+					<ToggleOption prop="INTERFACE_SHOW_DATE" title="Display image date" description="Show the image date in the gallery" checked={ settings.displayImageDate } />
+					<ToggleOption prop="INTERFACE_SHOW_TAGS" title="Display image tags" description="Show the image tags in the gallery" checked={ settings.displayImageTags } />
+					<InputOption prop="INTERFACE_GALLERY_FETCH_IMAGES" title="Number of images per API call" placeholder="Number of images loaded from the API (default: 10)" value={ settings.numberOfImages } />
+					<InputOption prop="INTERFACE_GALLERY_COLUMNS" title="Number of columns in image gallery" placeholder="Number of columns displayed in gallery (default: 3)" value={ settings.numberOfColumns } />
+				</div>
+			</section>
+		</form>
+	</div>
+</LayoutSidebar>
+
+<script type="module">
+	document.getElementById('save').addEventListener('click', async () => {
+		// Get the form data
+		const form = document.querySelector('form');
+		const inputs = form.querySelectorAll('input');
+
+		const data = {};
+		inputs.forEach(input => {
+			input.type === 'checkbox' ? data[input.getAttribute('data-prop')] = input.checked.toString() : data[input.getAttribute('data-prop')] = input.value;
+		});
+
+		const req = await fetch(`http://localhost:5000/settings`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		});
+
+		req.ok ? alert('Settings saved successfully!') : alert('An error occurred while saving the settings.');
+		window.location.reload();
+	});
+</script>

@@ -1,0 +1,17 @@
+---
+const { url, image } = Astro.props
+---
+
+<img class="w-full rounded-md" src={`${url}/${image}`} alt={image} />
+<div class="absolute inset-0 p-8 text-white flex flex-col" onload="this.classList.add('loaded')">
+    <div class="relative">
+        <a class="absolute inset-0" href="#">
+            <h1 class="text-3xl font-bold mb-3">Title</h1>
+            <p class="font-sm font-light">Author</p>
+        </a>
+    </div>
+    <div class="mt-auto flex gap-2 flex-wrap">
+        <span class="bg-white bg-opacity-90 py-1 px-4 rounded-md text-black">#tag 1</span>
+        <span class="bg-white bg-opacity-90 py-1 px-4 rounded-md text-black">#tag 2</span>
+    </div>
+</div>

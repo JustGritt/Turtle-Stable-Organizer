@@ -1,5 +1,5 @@
 ---
-import GithubIcon from "./assets/icons/Github.astro";
+import GithubIcon from "@icons/Github.astro";
 ---
 
 <footer class="p-4 m-4 bg-white rounded-lg shadow md:flex md:items-center md:justify-between md:p-6 xl:p-8 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 sm:p-6">
@@ -11,7 +11,7 @@ import GithubIcon from "./assets/icons/Github.astro";
 			</a>
 		</li>
 		<li>
-			<p class="text-sm text-center text-gray-500 justify-right ">
+			<p class="text-sm text-center text-gray-500 dark:text-gray-200 justify-right ">
 				&copy; {new Date().getFullYear() === 2024 ? new Date().getFullYear() : '2024 - ' + new Date().getFullYear()}  — JustGritt
 			</p>
 		</li>

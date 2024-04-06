@@ -2,8 +2,7 @@
 import QuestionIcon from '@icons/Question.astro';
 import GalleryIcon from '@icons/Gallery.astro';
 import PromptIcon from '@icons/Prompt.astro';
-import EmptyIcon from '@icons/Empty.astro'
-import CopyIcon from '@icons/Copy.astro'
+import CopyIcon from '@icons/Copy.astro';
 ---
 
 <section class="min-h-[full] mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
@@ -21,7 +20,6 @@ import CopyIcon from '@icons/Copy.astro'
     </div>
 </section>
 
-<!-- TODO: Replace by EXIF metadata -->
 <section class="min-h-[full] mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 sm:p-6 dark:bg-gray-800">
     <section class="bg-white dark:bg-gray-900 rounded-lg">
         <div class="px-8 py-12 mx-auto max-w-screen-xl">
@@ -128,10 +126,33 @@ import CopyIcon from '@icons/Copy.astro'
             dropzoneContent.appendChild(img);
         }
 
-        // exifr import
-        const exifr = await import('exifr');
-        await exifr.parse(files[0]).then((exif) => {
-            const parameters = exif.parameters;
+        const handleWorkflow = async (exif: any) => {
+            const parameters = exif.workflow;
+            console.log(parameters)
+        }
+
+        const handlePrompt = async (exif: any) => {
+            const parameters = exif.prompt;
+
+            let metadata = {};
+            if(exif.workflow) {
+                const nodes = JSON.parse(parameters);
+                console.log(nodes)
+                Object.keys(nodes).forEach((key) => {
+                    const input = nodes[key].inputs;
+                    if(input) {
+                        Object.keys(input).forEach(entry => {
+                            if(entry === "positive") {
+                                console.log("positive", input)
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        const handlePromptAutomatic = async (exif: any) => {
+            const parameters = exif.prompt;
 
             const metadata: { [key: string]: string } = {
                 positive: String(parameters.split('\n')[0]),
@@ -142,14 +163,23 @@ import CopyIcon from '@icons/Copy.astro'
                 model: String(parameters.split('Model: ')[1]?.split(',')[0]?.trim()),
                 seed: String(parameters.split('Seed:')[1]?.split(',')[0]?.trim()),
                 size: String(parameters.split('Size:')[1]?.split(',')[0]?.trim()),
-
             }
 
             Object.keys(metadata).forEach((key) => {
                 const tag = document.getElementById(key);
                 if (tag) tag.innerHTML = metadata[key];
             });
-        });
+        }
 
+        const exifr = await import('exifr');
+        await exifr.parse(files[0]).then((exif) => {
+            if(exif.workflow) {
+                handleWorkflow(exif);
+            }
+
+            if(exif.prompt) {
+                handlePrompt(exif);
+            }
+        });
     });
 </script>

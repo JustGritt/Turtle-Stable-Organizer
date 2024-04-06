@@ -27,9 +27,40 @@ import BellIcon from '@icons/Bell.astro';
 					<span class="sr-only">Check notifications</span>
 					<BellIcon />
 				</button>
-
-				<ColorModeSwitcher />
 			</div>
 		</div>
 	</div>
 </nav>
+
+<!-- <script type="module">
+	// Check localStorage for the theme
+	const theme = localStorage.getItem('color-theme');
+	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	const isDark = theme === 'dark' || (!theme && prefersDark);
+	document.documentElement.classList.toggle('dark', isDark);
+
+    const isDarkMode = localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+
+    // Set the initial icon visibility based on the current theme
+    themeToggleDarkIcon?.classList.toggle('hidden', isDarkMode);
+    themeToggleLightIcon?.classList.toggle('hidden', !isDarkMode);
+
+    themeToggleBtn?.addEventListener('click', () => {
+		const isDarkMode = document.documentElement.classList.contains('dark');
+
+        // Toggle the theme and the icons
+        document.documentElement.classList.toggle('dark');
+        themeToggleDarkIcon?.classList.toggle('hidden');
+        themeToggleLightIcon?.classList.toggle('hidden');
+
+		console.log(isDarkMode)
+
+        // Save the new theme in localStorage
+        localStorage.setItem('color-theme', isDarkMode ? 'light' : 'dark');
+        document.dispatchEvent(new Event('dark-mode'));
+    });
+</script> -->
