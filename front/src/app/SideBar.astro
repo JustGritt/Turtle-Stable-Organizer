@@ -23,8 +23,6 @@ import UploadIcon from '@icons/Upload.astro';
 
 					<li>
 						<button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages" id="menuDropdownButton">
-							<!-- <GalleryIcon /> -->
-
 							<a class="flex-1 ml-3 text-left whitespace-nowrap font-bold" sidebar-toggle-item>Stable Diffusion</a>
 							<DropdownIcon id="dropdown" />
 						</button>
@@ -52,10 +50,10 @@ import UploadIcon from '@icons/Upload.astro';
 					</li>
 
 					<li>
-						<a href="/options"
+						<a href="/settings"
 							class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700">
 							<OptionIcon />
-							<span class="ml-3" sidebar-toggle-item>Options</span>
+							<span class="ml-3" sidebar-toggle-item>Settings</span>
 						</a>
 					</li>
 				</ul>
@@ -68,7 +66,6 @@ import UploadIcon from '@icons/Upload.astro';
 <div id="sidebarBackdrop" class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90"></div>
 
 <script>
-
 	// Handle sidebar
 	const sidebar = document.getElementById('sidebar');
 	const sidebarBackdrop = document.getElementById('sidebarBackdrop')!;

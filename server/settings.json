@@ -1,6 +1,1 @@
-{
-    "OUTPUT_DIR": "output",
-    "OUTPUT_DIR_PATTERN": "[date]/[model_name]",
-    "INTERFACE_SHOW_DATE": true,
-    "INTERFACE_SHOW_TAGS": false
-}
+{"INTERFACE_DARK_MODE": "false", "INTERFACE_GALLERY_COLUMNS": "4", "INTERFACE_GALLERY_FETCH_IMAGES": "20", "INTERFACE_SHOW_DATE": "false", "INTERFACE_SHOW_TAGS": "false", "OUTPUT_DIR": "stable-diffusion-webui/outputs", "OUTPUT_DIR_PATTERN": "[date]/[model_name]", "UPLOAD_DIR": "./images"}

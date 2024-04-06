@@ -1,12 +1,22 @@
 ---
 import LayoutSidebar from '@app/LayoutSidebar.astro';
+import Image from '@components/Image.astro'
 import FilterIcon from '@icons/Filter.astro';
 import ArrowIcon from '@icons/Arrow.astro';
 
+// Get the current settings from the server
+const req = await fetch(`${import.meta.env.PUBLIC_API_URL}/settings`);
+const settings = await req.json().then(settings => {
+	return {
+		"numberOfImages": settings.INTERFACE_GALLERY_FETCH_IMAGES || 10,
+		"numberOfColumns": settings.INTERFACE_GALLERY_COLUMNS || 3
+	};
+});
+
 const url = import.meta.env.PUBLIC_API_URL;
-async function getImages() {
+async function getImages(page = 1, limit = 10) {
     try {
-        const response = await fetch(`${url}/images`);
+        const response = await fetch(`${url}/images?page=${page}&limit=${limit}`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -17,7 +27,7 @@ async function getImages() {
     }
 }
 
-const images = await getImages();
+const images = await getImages(1, settings.numberOfImages);
 console.log(images)
 ---
 
@@ -56,27 +66,18 @@ console.log(images)
 				</section>
 			</div>
 
-			<!-- Masonry  TODO: Replace data -->
+			<!-- No images -->
+			{images.length === 0 && <div class="text-center text-gray-500 dark:text-gray-400">No images found.</div>}
+
+			<!-- Masonry -->
 			<div class="mt-6 columns-2 md:columns-3 lg:columns-4">
 				{images.length >= 1 && images.map((image: string) => (
 					<div class="relative mb-4 before:content-[''] before:rounded-md before:absolute before:inset-0 before:bg-black before:bg-opacity-20">
-						<img class="w-full rounded-md" src={`${url}/${image}`} alt={image} />
-						<div class="absolute inset-0 p-8 text-white flex flex-col" onload="this.classList.add('loaded')">
-							<div class="relative">
-								<a class="absolute inset-0" href="#">
-									<h1 class="text-3xl font-bold mb-3">Title</h1>
-									<p class="font-sm font-light">Author</p>
-								</a>
-							</div>
-							<div class="mt-auto flex gap-2 flex-wrap">
-								<span class="bg-white bg-opacity-90 py-1 px-4 rounded-md text-black">#tag 1</span>
-								<span class="bg-white bg-opacity-90 py-1 px-4 rounded-md text-black">#tag 2</span>
-							</div>
-						</div>
+						<Image url={url} image={image} alt={image} />
 					</div>
 				))}
 			</div>
-			
+
 		</section>
 	</div>
 </LayoutSidebar>

@@ -35,20 +35,15 @@ import GalleryIcon from '@icons/Gallery.astro';
 </LayoutSidebar>
 
 <script>
-    const url = import.meta.env.PUBLIC_API_URL;
     const dropzone = document.getElementById('dropzone-file');
-
-	// Handle file upload
     dropzone?.addEventListener('change', async (e) => {
         const files = (e.target as HTMLInputElement)?.files;
         if (!files) return;
-
         Array.from(files).forEach(async (file) => {
             const formData = new FormData();
             formData.append("file", file);
-
             try {
-                const response = await fetch(`${url}/upload`, {
+                const response = await fetch(`${import.meta.env.PUBLIC_API_URL}/upload`, {
                     method: 'POST',
                     body: formData
                 });
@@ -57,7 +52,6 @@ import GalleryIcon from '@icons/Gallery.astro';
                 console.error("Error uploading file:", error);
             }
         });
-
 		(dropzone as HTMLInputElement).value = "";
     });
 </script>
